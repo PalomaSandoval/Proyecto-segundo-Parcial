@@ -160,16 +160,20 @@ def Articulos_blog():
     return articulos
 
 def obtener_todos_comentarios():
+    """
+    Trae todos los comentarios con la info del autor y del artículo.
+    (La 'R' de CRUD)
+    """
     pipeline = [
         # 1. Busca la info del autor
         {"$lookup": {"from": "users", "localField": "user_id", "foreignField": "_id", "as": "autor_info"}},
         # 2. Busca la info del artículo
         {"$lookup": {"from": "articles", "localField": "article_id", "foreignField": "_id", "as": "articulo_info"}},
-        # 3. Descomprime los arrays (pa' que sean objetos)
+        # 3. Descomprime arrays a que sean objetos
         {"$unwind": {"path": "$autor_info", "preserveNullAndEmptyArrays": True}},
         {"$unwind": {"path": "$articulo_info", "preserveNullAndEmptyArrays": True}},
         {
-            # proyecta / Limpia y renombra los campos
+            # 4. Proyecta solo lo que se necesita de la tabla 
             "$project": {
                 "_id": 1,
                 "texto_comentario": "$text",
@@ -178,11 +182,21 @@ def obtener_todos_comentarios():
                 "articulo_titulo": "$articulo_info.title"
             }
         },
-        # 5. Ordena por fecha (los más nuevos primero)
+        # 5. Ordena por fecha 
         {"$sort": {"fecha": -1}}
     ]
     
     comentarios = list(comments_col.aggregate(pipeline))
+
+    for comentario in comentarios:
+        fecha = comentario.get('fecha')
+        if isinstance(fecha, str):
+            # Si la fecha es un texto 
+            try:
+                fecha_limpia_str = fecha.split('.')[0].replace('Z', '')
+                comentario['fecha'] = datetime.strptime(fecha_limpia_str, '%Y-%m-%dT%H:%M:%S')
+            except ValueError:
+                comentario['fecha'] = None
     return comentarios
 
 def obtener_todas_categorias():

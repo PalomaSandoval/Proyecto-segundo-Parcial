@@ -18,32 +18,42 @@
                 <th>Acción</th>
             </tr>
         </thead>
-        <tbody>
+            <tbody>
+        
+        {% for comentario in comentarios %}
+        <tr>
+            <td>{{ comentario.texto_comentario }}</td>
             
-            {% for comentario in comentarios %}
-            <tr>
-                <td>{{ comentario.texto_comentario }}</td>
-                <td><strong>{{ comentario.autor_nombre | default('Usuario Borrado') }}</strong></td>
-                <td><em>{{ comentario.articulo_titulo | default('Artículo Borrado') }}</em></td>
-                <td>{{ comentario.fecha.strftime('%d/%m/%Y %H:%M') if comentario.fecha else 'N/A' }}</td>
-                <td>
-                    <form action="{{ url_for('admin_bp.admin_eliminar_comentario_ruta', comment_id_str=comentario._id) }}" method="POST" onsubmit="return confirm('¿Seguro que quieres eliminar este comentario?');" style="display: inline-block;">
-                        <button type="submit" class="btn btn-danger">
-                            <span class="material-symbols-outlined">delete</span>
-                        </button>
-                    </form>
-                </td>
-            </tr>
+            <td><strong>{{ comentario.autor_nombre | default('Usuario Borrado') }}</strong></td>
             
-            {% else %}
-            <tr>
-                <td colspan="5" style="text-align: center; padding: 2rem;">
-                    No hay comentarios en la base de datos.
-                </td>
-            </tr>
-            {% endfor %}
+            <td><em>{{ comentario.articulo_titulo | default('Artículo Borrado') }}</em></td>
 
-        </tbody>
+            <td>
+                {% if comentario.fecha %}
+                    {{ comentario.fecha.strftime('%d/%m/%Y %H:%M') }}
+                {% else %}
+                    N/A
+                {% endif %}
+            </td>
+            
+            <td>
+                <form action="{{ url_for('admin_bp.admin_eliminar_comentario_ruta', comment_id_str=comentario._id) }}" method="POST" onsubmit="return confirm('¿Seguro que quieres eliminar este comentario?');" style="display: inline-block;">
+                    <button type="submit" class="btn btn-danger">
+                        <span class="material-symbols-outlined">delete</span>
+                    </button>
+                </form>
+            </td>
+        </tr>
+        
+        {% else %}
+        <tr>
+            <td colspan="5" style="text-align: center; padding: 2rem;">
+                No hay comentarios en la base de datos.
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
     </table>
 
 {% endblock %}
