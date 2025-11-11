@@ -1,59 +1,98 @@
 {% extends "admin_layout.html" %}
 
-{% block title %}Admin - Comentarios{% endblock %}
+{% block title %}Comentarios{% endblock %}
 
 {% block page_title %}
     Gestión de Comentarios
 {% endblock %}
 
 {% block content %}
-    
-    <table class="admin-table">
-        <thead>
-            <tr>
-                <th style="width: 40%;">Comentario</th>
-                <th>Autor</th>
-                <th>En el Artículo</th>
-                <th>Fecha</th>
-                <th>Acción</th>
-            </tr>
-        </thead>
-            <tbody>
-        
-        {% for comentario in comentarios %}
-        <tr>
-            <td>{{ comentario.texto_comentario }}</td>
-            
-            <td><strong>{{ comentario.autor_nombre | default('Usuario Borrado') }}</strong></td>
-            
-            <td><em>{{ comentario.articulo_titulo | default('Artículo Borrado') }}</em></td>
 
-            <td>
-                {% if comentario.fecha %}
-                    {{ comentario.fecha.strftime('%d/%m/%Y %H:%M') }}
-                {% else %}
-                    N/A
-                {% endif %}
-            </td>
+    <div class="admin-main" style="margin-bottom: 2rem;">
+        <h3>Crear Nuevo Comentario</h3>
+        
+        <form class="admin-form" method="POST" action="{{ url_for('admin_bp.admin_crear_comentario_ruta') }}" style="max-width: none; margin: 0;">
             
-            <td>
-                <form action="{{ url_for('admin_bp.admin_eliminar_comentario_ruta', comment_id_str=comentario._id) }}" method="POST" onsubmit="return confirm('¿Seguro que quieres eliminar este comentario?');" style="display: inline-block;">
-                    <button type="submit" class="btn btn-danger">
-                        <span class="material-symbols-outlined">delete</span>
+            <div style="display: flex; gap: 1rem; align-items: flex-end;">
+
+                <div class="form-group" style="margin-bottom: 0; flex: 1;">
+                    <label for="articulo_id">Asignar al Artículo:</label>
+                    <select name="articulo_id" id="articulo_id" required style="width:100%; padding: 0.8rem 1rem; font-size: 1.05rem; font-family: 'Nunito', sans-serif; border: 1px solid var(--border-soft); border-radius: 7px; background-color: var(--background-light);">
+                        
+                        <option value="" disabled selected>-- Selecciona un artículo --</option>
+                        {% for art in articulos %}
+                            <option value="{{ art._id }}">{{ art.titulo }}</option>
+                        {% endfor %}
+                        
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0; flex: 2;">
+                    <label for="texto_comentario">Texto del Comentario:</label>
+                    <input type="text" id="texto_comentario" name="texto_comentario" required>
+                </div>
+                
+                <div class="form-actions" style="margin-bottom: 0;">
+                    <button type="submit" class="btn btn-primary">
+                        <span class="material-symbols-outlined">add_circle</span>
+                        Crear
                     </button>
-                </form>
-            </td>
-        </tr>
+                </div>
+            </div> </form>
+    </div>
+
+    <div class="admin-main">
+        <h3></h3>
         
-        {% else %}
-        <tr>
-            <td colspan="5" style="text-align: center; padding: 2rem;">
-                No hay comentarios en la base de datos.
-            </td>
-        </tr>
-        {% endfor %}
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th style="width: 40%;">Comentario</th>
+                    <th>Autor</th>
+                    <th>En el Artículo</th>
+                    <th>Fecha</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+            {% for comentario in comentarios %}
+            <tr>
+                <td>{{ comentario.texto_comentario }}</td>
+                
+                <td><strong>{{ comentario.autor_nombre | default('Usuario Borrado') }}</strong></td>
+                
+                <td><em>{{ comentario.articulo_titulo | default('Artículo Borrado') }}</em></td>
 
-    </tbody>
-    </table>
+                <td>
+                    {% if comentario.fecha %}
+                        {{ comentario.fecha.strftime('%d/%m/%Y %H:%M') }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                
+                <td>
+                    <a href="{{ url_for('admin_bp.admin_editar_comentario_ruta', comment_id_str=comentario._id) }}" class="btn btn-secondary">
+                        <span class="material-symbols-outlined">edit</span>
+                    </a>
 
-{% endblock %}
+                    <form action="{{ url_for('admin_bp.admin_eliminar_comentario_ruta', comment_id_str=comentario._id) }}" method="POST" onsubmit="return confirm('¿Seguro que quieres eliminar este comentario?');" style="display: inline-block;">
+                        <button type="submit" class="btn btn-danger">
+                            <span class="material-symbols-outlined">delete</span>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            
+            {% else %}
+            <tr>
+                <td colspan="5" style="text-align: center; padding: 2rem;">
+                    No hay comentarios en la base de datos.
+                </td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+        </table>
+    </div> {% endblock %}

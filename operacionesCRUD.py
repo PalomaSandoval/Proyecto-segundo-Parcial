@@ -251,6 +251,15 @@ def obtener_tag_por_id(tag_id_str):
     
     return tags_col.find_one({"_id": obj_tag_id})
 
+def obtener_comentario_por_id(comment_id_str):
+    #busca una tag por su ID para editarla
+    try:
+        obj_comment_id = ObjectId(comment_id_str)
+    except Exception as e:
+        print(f"Error al convertir ID de comentario: {e}")
+        return None
+    
+    return comments_col.find_one({"_id": obj_comment_id})
 
 #Editar/Update
 
@@ -284,6 +293,30 @@ def editar_articulo(article_id_str, titulo, texto, ids_categorias, ids_tags):
         else: return False            
     except Exception as e:
         print(f"Error {e}")
+        return False
+
+def editar_comentario(comment_id_str, nuevo_texto):  
+    try:
+        obj_comment_id = ObjectId(comment_id_str)
+    except Exception as e:
+        print(f"Error al convertir ID: {e}")
+        return False
+
+    # filtro de id 
+    filtro = {"_id": obj_comment_id}
+
+    # El campo text según función 'agregar_comentario'
+    actualizacion = {"$set": {"text": nuevo_texto}}
+    
+    try:
+        # comments_col
+        result = comments_col.update_one(filtro, actualizacion)
+        if result.modified_count == 1 or result.matched_count == 1:
+            return True
+        else:
+            return False # No lo encontró
+    except Exception as e:
+        print(f"Error al editar comentario: {e}")
         return False
 
 def editar_categoria(cat_id_str, nuevo_nombre):   

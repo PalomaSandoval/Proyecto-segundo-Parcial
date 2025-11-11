@@ -1,0 +1,36 @@
+{% extends "admin_layout.html" %}
+
+{% block title %}Editar Comentario{% endblock %}
+
+{% block page_title %}
+    Editando Comentario
+{% endblock %}
+
+{% block page_actions %}
+    <a href="{{ url_for('admin_bp.admin_mostrar_comentarios') }}" class="btn btn-secondary">
+        <span class="material-symbols-outlined">cancel</span>
+        Cancelar
+    </a>
+{% endblock %}
+
+{% block content %}
+
+    <form class="admin-form" method="POST" action="{{ url_for('admin_bp.admin_editar_comentario_ruta', comment_id_str=comentario._id) }}">
+
+        <div class="form-group">
+            <label for="texto_comentario">Texto del Comentario</label>
+            <textarea id="texto_comentario" name="texto_comentario" rows="6" required>{{ comentario.text or '' }}</textarea>
+        </div>
+
+        <hr>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                <span class="material-symbols-outlined">save</span>
+                Confirmar Cambios
+            </button>
+        </div>
+
+    </form>
+
+{% endblock %}
