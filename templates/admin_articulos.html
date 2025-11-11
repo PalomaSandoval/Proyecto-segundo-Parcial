@@ -1,0 +1,69 @@
+{% extends "admin_layout.html" %}
+
+{% block title %}Admin - Artículos{% endblock %}
+
+{% block page_title %}
+    Gestión de Artículos
+{% endblock %}
+
+{% block page_actions %}
+    <a href="{{ url_for('admin_bp.admin_crear_articulo_ruta') }}" class="btn btn-primary">
+        <span class="material-symbols-outlined">add_circle</span>
+        Crear Nuevo Artículo
+    </a>
+{% endblock %}
+
+{% block content %}
+    
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Título del Artículo</th>
+                <th>Autor</th>
+                <th>Categoría</th>
+                <th>Tags</th>
+                <th style="width: 220px;">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            {% for articulo in articulos %}
+            <tr>
+                <td><strong>{{ articulo.titulo }}</strong></td>
+                <td>{{ articulo.autor_nombre | default('N/A') }}</td>
+                <td>
+                    {{ articulo.categorias[0] if articulo.categorias else 'Sin Categoría' }}
+                </td>
+                <td>
+                    <div class="table-tags">
+                        {% for tag in articulo.tags %}
+                            <span>#{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                </td>
+                <td>
+                <a href="{{ url_for('admin_bp.admin_editar_articulo_ruta', article_id_str=articulo._id) }}" class="btn btn-secondary">
+                    <span class="material-symbols-outlined">edit</span>
+                    Editar
+                </a>
+                    
+                    <form action="{{ url_for('admin_bp.admin_eliminar_articulo', article_id_str=articulo._id) }}" method="POST" onsubmit="return confirm('¿Seguro que quieres eliminar este artículo?\n\n{{ articulo.titulo }}\n\n(También se borrarán todos sus comentarios)');" style="display: inline-block;">
+                        <button type="submit" class="btn btn-danger">
+                            <span class="material-symbols-outlined">delete</span>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            
+            {% else %}
+            <tr>
+                <td colspan="5" style="text-align: center; padding: 2rem;">
+                    No hay artículos en la base de datos.
+                </td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+
+{% endblock %}

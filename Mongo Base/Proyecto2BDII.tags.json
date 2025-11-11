@@ -1,0 +1,24 @@
+[{
+  "_id": {
+    "$oid": "6910f47077e6b878327dca98"
+  },
+  "name": "Audifonos"
+},
+{
+  "_id": {
+    "$oid": "6910f47777e6b878327dca99"
+  },
+  "name": "2025"
+},
+{
+  "_id": {
+    "$oid": "6910f48177e6b878327dca9a"
+  },
+  "name": "Cancelacion de Ruido"
+},
+{
+  "_id": {
+    "$oid": "6910f48d77e6b878327dca9b"
+  },
+  "name": "EchoBuds 3"
+}]

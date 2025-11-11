@@ -1,0 +1,36 @@
+{% extends "admin_layout.html" %}
+
+{% block title %}Editar Tag{% endblock %}
+
+{% block page_title %}
+    Editando Tag
+{% endblock %}
+
+{% block page_actions %}
+    <a href="{{ url_for('admin_bp.admin_mostrar_tags') }}" class="btn btn-secondary">
+        <span class="material-symbols-outlined">cancel</span>
+        Cancelar
+    </a>
+{% endblock %}
+
+{% block content %}
+    
+    <form class="admin-form" method="POST" action="{{ url_for('admin_bp.admin_editar_tag_ruta', tag_id_str=tag._id) }}">
+        
+        <div class="form-group">
+            <label for="nombre">Nombre del Tag (sin el #)</label>
+            <input type="text" id="nombre" name="nombre" value="{{ tag.name }}" required>
+        </div>
+        
+        <hr>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                <span class="material-symbols-outlined">save</span>
+                Confirmar Cambios
+            </button>
+        </div>
+
+    </form>
+
+{% endblock %}

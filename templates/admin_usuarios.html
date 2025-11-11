@@ -1,0 +1,46 @@
+{% extends "admin_layout.html" %}
+
+{% block title %}Admin - Usuarios{% endblock %}
+
+{% block page_title %}
+    Gestión de Usuarios
+{% endblock %}
+
+{% block content %}
+    
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Nombre de Usuario</th>
+                <th>Email</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            {% for usuario in usuarios %}
+            <tr>
+                <td><strong>{{ usuario.name }}</strong></td>
+                <td>{{ usuario.email }}</td>
+                <td>
+                    <form action="{{ url_for('admin_bp.admin_eliminar_usuario', user_id_str=usuario._id) }}" method="POST" onsubmit="return confirm('¿Seguro que quieres eliminar a {{ usuario.name }}?');">
+                        <button type="submit" class="btn btn-danger">
+                            <span class="material-symbols-outlined">delete</span>
+                            Borrar
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            
+            {% else %}
+            <tr>
+                <td colspan="3" style="text-align: center; padding: 2rem;">
+                    No hay usuarios registrados todavía.
+                </td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+
+{% endblock %}

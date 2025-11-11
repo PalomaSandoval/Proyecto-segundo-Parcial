@@ -1,0 +1,36 @@
+{% extends "admin_layout.html" %}
+
+{% block title %}Editar Categoría{% endblock %}
+
+{% block page_title %}
+    Editando Categoría
+{% endblock %}
+
+{% block page_actions %}
+    <a href="{{ url_for('admin_bp.admin_mostrar_categorias') }}" class="btn btn-secondary">
+        <span class="material-symbols-outlined">cancel</span>
+        Cancelar
+    </a>
+{% endblock %}
+
+{% block content %}
+    
+    <form class="admin-form" method="POST" action="{{ url_for('admin_bp.admin_editar_categoria_ruta', cat_id_str=categoria._id) }}">
+        
+        <div class="form-group">
+            <label for="nombre">Nombre de la Categoría</label>
+            <input type="text" id="nombre" name="nombre" value="{{ categoria.name }}" required>
+        </div>
+        
+        <hr>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                <span class="material-symbols-outlined">save</span>
+                Confirmar Cambios
+            </button>
+        </div>
+
+    </form>
+
+{% endblock %}

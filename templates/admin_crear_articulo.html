@@ -1,0 +1,73 @@
+{% extends "admin_layout.html" %}
+
+{% block title %}Crear Artículo{% endblock %}
+
+{% block page_title %}
+    Crear Nuevo Artículo
+{% endblock %}
+
+{% block page_actions %}
+    <a href="{{ url_for('admin_bp.admin_mostrar_articulos') }}" class="btn btn-secondary">
+        <span class="material-symbols-outlined">cancel</span>
+        Cancelar
+    </a>
+{% endblock %}
+
+{% block content %}
+    
+    <form class="admin-form" method="POST" action="{{ url_for('admin_bp.admin_crear_articulo_ruta') }}">
+        
+        <div class="form-group">
+            <label for="titulo">Título del Artículo</label>
+            <input type="text" id="titulo" name="titulo" value="{{ articulo.title or '' }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="texto">Contenido del Artículo</label>
+            <textarea id="texto" name="texto" rows="10" required>{{ articulo.text or '' }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Categorías</label>
+            <div class="checkbox-group">
+                {% for cat in all_categories %}
+                <label class="checkbox-label">
+                    <input type="checkbox" 
+                           name="categorias" 
+                           value="{{ cat._id }}"
+                           {% if cat._id|string in (articulo.categories or []) %}checked{% endif %}
+                           > 
+                    {{ cat.name }}
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Tags</label>
+            <div class="checkbox-group">
+                {% for tag in all_tags %}
+                <label class="checkbox-label">
+                    <input type="checkbox" 
+                           name="tags" 
+                           value="{{ tag._id }}"
+                           {% if tag._id|string in (articulo.tags or []) %}checked{% endif %}
+                           > 
+                    #{{ tag.name }}
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                <span class="material-symbols-outlined">save</span>
+                Publicar Artículo
+            </button>
+        </div>
+
+    </form>
+
+{% endblock %}

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>{% block title %}Panel de Admin{% endblock %}</title>
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
+    
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+<body>
+
+    <div class="admin-wrapper">
+
+        <aside class="admin-sidebar">
+            
+            <div class="sidebar-logo">
+                Blog<span>Admin</span>
+            </div>
+
+            <nav class="admin-nav">
+                <span class="nav-title">Administrar</span>
+                
+                <ul>
+                    <li>
+                        <!-- Revisa si 'active_page' es 'dashboard' -->
+                        <a href="{{ url_for('admin_bp.admin_dashboard') }}" 
+                           class="{{ 'active' if active_page == 'dashboard' else '' }}">
+                            <span class="material-symbols-outlined">home</span>
+                            Inicio
+                        </a>
+                    </li>
+                    <li>
+                        <!-- Revisa si 'active_page' es 'usuarios' -->
+                        <a href="{{ url_for('admin_bp.admin_mostrar_usuarios') }}" 
+                           class="{{ 'active' if active_page == 'usuarios' else '' }}">
+                            <span class="material-symbols-outlined">group</span>
+                            Usuarios
+                        </a>
+                    </li>
+                    <li>
+                        <!-- Revisa si 'active_page' es 'articulos' -->
+                        <a href="{{ url_for('admin_bp.admin_mostrar_articulos') }}" 
+                           class="{{ 'active' if active_page == 'articulos' else '' }}">
+                            <span class="material-symbols-outlined">newsmode</span>
+                            Artículos
+                        </a>
+                    </li>
+                </ul>
+                <span class="nav-title">Contenido</span>
+                                <ul>
+                                    <li>
+                                        <a href="{{ url_for('admin_bp.admin_mostrar_comentarios') }}"
+                                        class="{{ 'active' if active_page == 'Comentarios' else '' }}">
+                                            <span class="material-symbols-outlined">forum</span>
+                                            Comentarios
+                                        </a>
+                                    </li>    
+                                    <li>
+                                        <a href="{{ url_for('admin_bp.admin_mostrar_categorias') }}" 
+                                        class="{{ 'active' if active_page == 'categorias' else '' }}">
+                                            <span class="material-symbols-outlined">category</span>
+                                            Categorías
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('admin_bp.admin_mostrar_tags') }}" 
+                                        class="{{ 'active' if active_page == 'tags' else '' }}">
+                                            <span class="material-symbols-outlined">bookmark</span>
+                                            Tags
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </nav>
+            <div class="sidebar-footer">
+                <small>Conectado como:</small>
+                <h4>{{ session.user_name | default('Admin') }}</h4>
+                
+            <ul style="list-style: none; margin-top: 1rem;">
+                <li>
+                    <a href="{{ url_for('auth_bp.logout') }}" style="font-size: 0.9rem; gap: 8px; color: var(--secondary-color);">
+                        <span class="material-symbols-outlined" style="font-size: 1.1rem;">logout</span>
+                        Cerrar Sesión
+                    </a>
+                </li>
+            </ul>
+            </div>
+
+        </aside>
+
+        <main class="admin-content">
+            <header class="admin-header">
+                <h1>
+                    {% block page_title %}
+                        Dashboard
+                    {% endblock %}
+                </h1>
+                {% block page_actions %}{% endblock %}
+            </header>
+
+            <section class="admin-main">
+                
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                    </div>
+                    {% endif %}
+                {% endwith %}
+                
+                {% block content %}
+                    <p> Error</p>
+                {% endblock %}
+            </section>
+
+        </main>
+    </div> 
+</body>
+</html>

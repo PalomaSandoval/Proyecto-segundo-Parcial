@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='InicioyRegistro.css') }}">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="page-container">
+        <div class="logo-container">
+            <h1>WikiBlog</h1>
+        </div>
+        <div class="auth-wrapper">
+            
+            <div class="tabs">
+                <div class="tab active">Iniciar Sesión</div>
+                <a href="{{ url_for('auth_bp.mostrar_registro') }}" class="tab">Registrarse</a>
+            </div>
+
+            <div class="form-content">
+                <form method="POST" action="{{ url_for('auth_bp.procesar_login') }}"> 
+                    
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" name="email" placeholder="tu@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login-nombre">Nombre</label>
+                        <input type="text" id="login-nombre" name="nombre" placeholder="Tu nombre" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label for="login-password">Contraseña</label>
+                            <a href="#" class="forgot-pass">¿Olvidaste tu contraseña?</a>
+                        </div>
+                        <input type="password" id="login-password" name="password" placeholder="••••••••" required>
+                    </div>
+                    
+                    <button type="submit" class="btn">Iniciar Sesión</button>
+                </form>
+
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <ul class="flashes" style="color: red; list-style-type: none; padding: 0; text-align: center;">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endwith %}
+                </div>
+        </div>
+    </div>
+
+</body>
+</html>

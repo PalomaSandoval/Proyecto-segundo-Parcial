@@ -1,0 +1,35 @@
+[{
+  "_id": {
+    "$oid": "6910f4cf77e6b878327dca9c"
+  },
+  "title": "AudioFlow Lanza los \"EchoBuds 3\": Cancelación de Ruido que Aprende de tu Entorno",
+  "date": {
+    "$date": "2025-11-09T14:08:47.414Z"
+  },
+  "text": "La compañía de audio AudioFlow ha lanzado hoy sus nuevos auriculares insignia, los EchoBuds 3. La gran novedad no es solo la mejora en la calidad del sonido, sino su nueva tecnología \"SmartSilence\".\r\n\r\nA diferencia de la cancelación de ruido tradicional, que bloquea todo el sonido exterior, SmartSilence utiliza IA para analizar activamente tu entorno.\r\n\r\nSegún la compañía, los EchoBuds 3 pueden detectar sonidos específicos y decidir qué bloquear y qué dejar pasar. Por ejemplo, filtrarán el ruido constante del motor de un autobús, pero permitirán que escuches claramente el anuncio de tu parada o una bocina de coche cercana por seguridad.\r\n\r\nLos auriculares también pausan automáticamente el audio cuando detectan que estás hablando con alguien. Con una duración de batería de 10 horas y resistencia al agua, los EchoBuds 3 buscan competir directamente con los líderes del mercado.\r\n\r\nEstarán disponibles la próxima semana por $199 dólares.",
+  "user_id": {
+    "$oid": "690e67d3fc47033e857558a8"
+  },
+  "categories": [
+    {
+      "$oid": "6910f44677e6b878327dca96"
+    },
+    {
+      "$oid": "6910f44e77e6b878327dca97"
+    }
+  ],
+  "tags": [
+    {
+      "$oid": "6910f47077e6b878327dca98"
+    },
+    {
+      "$oid": "6910f47777e6b878327dca99"
+    },
+    {
+      "$oid": "6910f48177e6b878327dca9a"
+    },
+    {
+      "$oid": "6910f48d77e6b878327dca9b"
+    }
+  ]
+}]

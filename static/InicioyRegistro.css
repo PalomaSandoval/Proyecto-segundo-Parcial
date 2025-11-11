@@ -1,0 +1,134 @@
+/* --- Reseteo básico y estilos globales --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f2f5; /* Un gris claro para el fondo */
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* --- Contenedor del Formulario --- */
+.auth-wrapper {
+    width: 100%;
+    max-width: 420px;
+    margin-bottom: 3rem; /* Espacio entre los dos formularios de ejemplo */
+}
+
+/* --- Pestañas (Tabs) --- */
+.tabs {
+    display: flex;
+}
+
+.tab {
+    flex: 1; /* Ocupa la mitad del espacio */
+    padding: 1rem;
+    text-align: center;
+    font-weight: 500;
+    color: #888;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+.tab.active {
+    color: #2c3e50;
+    font-weight: 600;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-bottom: 1px solid #ffffff; /* Truco para que se fusione con el card */
+    border-radius: 8px 8px 0 0;
+    position: relative;
+    top: 1px; /* Alinea con el borde del card */
+}
+
+/* --- Contenido del Card Blanco --- */
+.form-content {
+    background-color: #ffffff;
+    padding: 2rem;
+    border: 1px solid #ddd;
+    border-top: none; /* La pestaña activa maneja el borde superior */
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* --- Grupos de Formulario (Label + Input) --- */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 0.5rem;
+}
+
+.label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.forgot-pass {
+    font-size: 0.8rem;
+    color: #555;
+    text-decoration: none;
+}
+.forgot-pass:hover {
+    text-decoration: underline;
+}
+
+/* --- Campos de Input --- */
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="text"] {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #f9f9f9; /* Fondo gris claro del input */
+    font-size: 0.9rem;
+    font-family: 'Poppins', sans-serif;
+}
+
+.form-group input::placeholder {
+    color: #aaa;
+}
+
+/* --- Botón Principal --- */
+.btn {
+    width: 100%;
+    background-color: #2c3e50; /* Color oscuro del botón */
+    color: white;
+    border: none;
+    padding: 0.85rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+    background-color: #34495e; /* Un tono ligeramente más claro al pasar el mouse */
+}

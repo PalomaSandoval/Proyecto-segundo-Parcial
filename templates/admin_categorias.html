@@ -1,0 +1,70 @@
+{% extends "admin_layout.html" %}
+
+{% block title %}Admin - Categorías{% endblock %}
+
+{% block page_title %}
+    Gestión de Categorías
+{% endblock %}
+
+{% block content %}
+    
+    <div class="admin-main" style="margin-bottom: 2rem;">
+        <h3>Crear Nueva Categoría</h3>
+        <form class="admin-form" method="POST" action="{{ url_for('admin_bp.admin_crear_categoria') }}" style="max-width: none; margin: 0; display: flex; gap: 1rem; align-items: flex-end;">
+            
+            <div class="form-group" style="margin-bottom: 0; flex: 1;">
+                <label for="nombre_categoria">Nombre de la Categoría</label>
+                <input type="text" id="nombre_categoria" name="nombre_categoria" required>
+            </div>
+            
+            <div class="form-actions" style="margin-bottom: 0;">
+                <button type="submit" class="btn btn-primary">
+                    <span class="material-symbols-outlined">add_circle</span>
+                    Crear
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="admin-main">
+        <h3>Categorías Existentes</h3>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Nombre de la Categoría</th>
+                    <th style="width: 220px;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for cat in categorias %}
+                <tr>
+                    <td><strong>{{ cat.name }}</strong></td>
+                    <td>
+                    <a href="{{ url_for('admin_bp.admin_editar_categoria_ruta', cat_id_str=cat._id) }}" class="btn btn-secondary">
+                        <span class="material-symbols-outlined">edit</span>
+                        Editar
+                    </a>
+                        
+                    <form action="{{ url_for('admin_bp.admin_eliminar_categoria_ruta', cat_id_str=cat._id) }}" method="POST" onsubmit="return confirm('¿Seguro que quieres eliminar esta categoría?\n\n{{ cat.name }}\n\n(Se quitará de TODOS los artículos que la usen)');" style="display: inline-block;">
+                        <button type="submit" class="btn btn-danger">
+                            <span class="material-symbols-outlined">delete</span>
+                        </button>
+                    </form>
+                    </td>
+                </tr>
+                
+                {% else %}
+                <tr>
+                    <td colspan="2" style="text-align: center; padding: 2rem;">
+                        No hay categorías. ¡Crea una arriba!
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
